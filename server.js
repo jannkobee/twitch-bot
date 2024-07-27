@@ -68,7 +68,8 @@ client.on("message", async (channel, tags, message, self) => {
 
       await client.say(
         channel,
-        `Degenerate rats typed 'xdd' ${xdds} times within the last ${timeString}`
+        `Degenerate rats typed xdd ${xdds} times within the last ${timeString}`,
+        { "reply-parent-msg-id": tags.id }
       );
     }
     // Handle other commands similarly
