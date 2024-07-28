@@ -6,7 +6,7 @@ const moment = require("moment");
 let toggleConcat = true;
 
 let xdds = 250;
-const startTime = moment("2024-07-28 02:32 AM", "YYYY-MM-DD hh:mm A");
+const startTime = moment("2024-07-28 02:32 AM");
 let lastMessage = "";
 
 let liveAccount = {
