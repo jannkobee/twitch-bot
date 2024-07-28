@@ -6,7 +6,7 @@ const moment = require("moment");
 let toggleConcat = true;
 
 let xdds = 220;
-const startTime = moment("2024-07-28 02:32 AM"); // Store the script start time
+const startTime = moment("2024-07-28 02:32 AM", "YYYY-MM-DD hh:mm A");
 let lastMessage = "";
 
 let liveAccount = {
@@ -40,7 +40,7 @@ const client = new tmi.Client({
     username: process.env.TWITCH_BOT_USERNAME,
     password: `oauth:${process.env.TWITCH_OAUTH_TOKEN}`,
   },
-  channels: ["kovi_lol"],
+  channels: ["Caedrel"],
 });
 
 client.connect();
@@ -91,7 +91,8 @@ client.on("message", async (channel, tags, message, self) => {
     }
     if (message.toLowerCase() === "!xddcount") {
       const currentTime = moment();
-      const duration = moment.duration(currentTime.diff(startTime));
+      const isoDate = startTime.toISOString();
+      const duration = moment.duration(currentTime.diff(isoDate));
       const timeString = `${duration.hours()}h ${duration.minutes()}m ${duration.seconds()}s`;
       let msg = `Degenerate rats typed xdd ${xdds} times within the last ${timeString}`;
 
