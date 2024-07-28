@@ -5,7 +5,7 @@ const axios = require("axios");
 const moment = require("moment");
 let toggleConcat = true;
 
-let xdds = 220;
+let xdds = 250;
 const startTime = moment("2024-07-28 02:32 AM", "YYYY-MM-DD hh:mm A");
 let lastMessage = "";
 
@@ -73,7 +73,7 @@ client.on("message", async (channel, tags, message, self) => {
 
       lastMessage = msg;
     }
-    if (message.toLowerCase().includes(" xdd ")) {
+    if (message.toLowerCase().includes("xdd")) {
       xdds += 1;
     }
     if (message.toLowerCase() === "!xdd") {
@@ -91,8 +91,7 @@ client.on("message", async (channel, tags, message, self) => {
     }
     if (message.toLowerCase() === "!xddcount") {
       const currentTime = moment();
-      const isoDate = startTime.toISOString();
-      const duration = moment.duration(currentTime.diff(isoDate));
+      const duration = moment.duration(currentTime.diff(startTime));
       const timeString = `${duration.hours()}h ${duration.minutes()}m ${duration.seconds()}s`;
       let msg = `Degenerate rats typed xdd ${xdds} times within the last ${timeString}`;
 
