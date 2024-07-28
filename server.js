@@ -3,9 +3,11 @@ require("dotenv").config();
 const tmi = require("tmi.js");
 const axios = require("axios");
 const moment = require("moment");
+let toggleConcat = true;
 
-let xdds = 0;
-const startTime = moment(); // Store the script start time
+let xdds = 220;
+const startTime = moment("2024-07-28 02:32 AM"); // Store the script start time
+let lastMessage = "";
 
 let liveAccount = {
   id: "",
@@ -38,7 +40,7 @@ const client = new tmi.Client({
     username: process.env.TWITCH_BOT_USERNAME,
     password: `oauth:${process.env.TWITCH_OAUTH_TOKEN}`,
   },
-  channels: ["Caedrel"],
+  channels: ["kovi_lol"],
 });
 
 client.connect();
@@ -50,27 +52,58 @@ client.on("message", async (channel, tags, message, self) => {
       process.env.TWITCH_BOT_USERNAME.toLocaleLowerCase();
 
     if (tags["first-msg"] && message.toLocaleLowerCase() === "xdd") {
-      await client.say(channel, "FirstTimexdder Clap CHILLS xddShaking");
+      let msg = "FirstTimexdder Clap CHILLS xddShaking";
+
+      msg = msg.concat(toggleConcat ? " ppx" : " xpp");
+
+      toggleConcat = !toggleConcat;
+
+      await client.say(channel, msg);
+
+      lastMessage = msg;
     }
     if (tags["first-msg"]) {
-      await client.say(channel, "FirstTimeChatter");
+      let msg = "FirstTimeChatter";
+
+      msg = msg.concat(toggleConcat ? " ppx" : " xpp");
+
+      toggleConcat = !toggleConcat;
+
+      await client.say(channel, msg);
+
+      lastMessage = msg;
     }
-    if (message.toLowerCase() === "xdd") {
+    if (message.toLowerCase().includes(" xdd ")) {
       xdds += 1;
     }
     if (message.toLowerCase() === "!xdd") {
-      await client.say(channel, "xdd", { "reply-parent-msg-id": tags.id });
+      let msg = "xdd";
+
+      msg = msg.concat(toggleConcat ? " ppx" : " xpp");
+
+      toggleConcat = !toggleConcat;
+
+      await client.say(channel, msg, {
+        "reply-parent-msg-id": tags.id,
+      });
+
+      lastMessage = msg;
     }
     if (message.toLowerCase() === "!xddcount") {
       const currentTime = moment();
       const duration = moment.duration(currentTime.diff(startTime));
       const timeString = `${duration.hours()}h ${duration.minutes()}m ${duration.seconds()}s`;
+      let msg = `Degenerate rats typed xdd ${xdds} times within the last ${timeString}`;
 
-      await client.say(
-        channel,
-        `Degenerate rats typed xdd ${xdds} times within the last ${timeString}`,
-        { "reply-parent-msg-id": tags.id }
-      );
+      msg = msg.concat(toggleConcat ? " ppx" : " xpp");
+
+      toggleConcat = !toggleConcat;
+
+      await client.say(channel, msg, {
+        "reply-parent-msg-id": tags.id,
+      });
+
+      lastMessage = msg;
     }
     // Handle other commands similarly
     if (message.toLowerCase() === "!rank") {
