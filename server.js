@@ -5,8 +5,8 @@ const axios = require("axios");
 const moment = require("moment");
 let toggleConcat = true;
 
-let xdds = 250;
-const startTime = moment("2024-07-28 02:32 AM");
+let xdds = 0;
+const startTime = moment();
 let lastMessage = "";
 
 let liveAccount = {
